@@ -1,0 +1,158 @@
+/* Definindo variáveis de cores para os temas, inspirado na Wise */
+:root {
+	--font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+	--bottom-nav-height: 60px;
+
+	/* Tema Claro (Padrão) */
+	--color-background: #fafafa;
+	--color-background-secondary: #ffffff;
+	--color-background-tertiary: #e7e7e7;
+	--color-border: #e5e7eb;
+
+	--color-bottomnav-bg: #163300;
+	--color-bottomnav-text: #ebebeb;
+	--color-bottomnav-hover-text: #80e142;
+	--color-bottomnav-active-text: #9fe870;
+
+	--color-text-primary: #112600;
+	--color-text-secondary: #6b7280;
+	--color-rate-value: #163300;
+
+	--color-select-hover-bg: #9fe870;
+	--color-select-hover-text-name: #163300;
+	--color-select-hover-text-code: #112600;
+
+	--color-select-selected-bg: #2e481a;
+	--color-select-selected-text: #ffffff;
+}
+
+[data-theme='dark'] {
+	/* Mantendo o verde como cor primária no tema escuro para consistência da marca */
+	--color-background: #0e0f0c;
+	--color-background-secondary: #1a1b18;
+	--color-background-tertiary: #2c2d2a;
+	--color-border: #1b1d1b;
+
+	--color-text-primary: #f3f4f6;
+	--color-text-secondary: #9ca3af;
+	--color-rate-value: #9fe870;
+
+	--color-bottomnav-bg: #1a1b18;
+	--color-bottomnav-text: #ebebeb;
+	--color-bottomnav-hover-text: #80e142;
+	--color-bottomnav-active-text: #9fe870;
+
+	--color-select-hover-bg: #9fe870;
+	--color-select-hover-text-name: #163300;
+	--color-select-hover-text-code: #112600;
+
+	--color-select-selected-bg: #2e481a;
+	--color-select-selected-text: #ffffff;
+
+}
+
+body {
+	margin: 0;
+    font-family: var(--font-main);
+	/* Adiciona espaço no final para não ser coberto pela barra de navegação */
+	padding-bottom: var(--bottom-nav-height);
+	background-color: var(--color-background);
+	color: var(--color-text-primary);
+	line-height: 1.6;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+a {
+	color: var(--color-primary);
+	text-decoration: none;
+}
+
+/* Remove as setas dos inputs de número */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+	margin: 0;
+}
+input[type='number'] {
+	-moz-appearance: textfield;
+}
+
+/* Estilos para o ícone do relógio SVG */
+.icon-clock {
+	width: 1em;
+	height: 1em;
+	display: inline-block;
+	vertical-align: middle;
+}
+.icon-clock svg {
+	display: block;
+	stroke: currentColor;
+	fill: none;
+	stroke-width: 32px;
+	stroke-miterlimit: 10;
+}
+
+/* Estilos para o toggle de tema */
+.theme-toggle-switch {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 28px;
+}
+
+.theme-toggle-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: var(--color-background-tertiary);
+	transition: 0.4s;
+	border-radius: 28px;
+}
+
+.knob {
+	position: absolute;
+	content: '';
+	height: 20px;
+	width: 20px;
+	left: 4px;
+	bottom: 4px;
+	background-color: white;
+	transition: 0.4s;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #5a647a; /* Cor escura para os ícones, visível no knob branco */
+}
+
+input:checked + .slider .knob {
+	transform: translateX(22px);
+}
+
+[data-theme='dark'] .slider {
+	background-color: #2a2d31;
+	border: 1px solid #747474;
+}
+
+input:checked + .slider {
+	background-color: var(--color-primary);
+}
+
+[data-theme='dark'] input:checked + .slider {
+	background-color: var(--color-background-tertiary);
+	border-color: var(--color-background-tertiary);
+}
