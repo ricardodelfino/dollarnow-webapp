@@ -4,7 +4,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import CurrencyRow from '$lib/components/CurrencyRow.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
-	import { selectedCurrency } from '$lib/stores/currency';
+	import { preferences } from '$lib/stores/preferences';
 
 	export let data: PageData;
 
@@ -12,11 +12,9 @@
 	let toValue: number | undefined;
 	let lastEdited: 'from' | 'to' = 'from';
 
-	let inverted = false;
-
 	// Lógica reativa para determinar as moedas de origem e destino
-	$: fromCode = inverted ? $selectedCurrency : 'USD';
-	$: toCode = inverted ? 'USD' : $selectedCurrency;
+	$: fromCode = $preferences.inverted ? $preferences.currency : 'USD';
+	$: toCode = $preferences.inverted ? 'USD' : $preferences.currency;
 
 	// --- Simplified Rate Logic ---
 	// The API now provides a consistent format (units per 1 USD), so the logic is much simpler.
@@ -70,7 +68,7 @@
 			: [];
 
 	function handleSwap() {
-		inverted = !inverted;
+		preferences.update((p) => ({ ...p, inverted: !p.inverted }));
 		lastEdited = 'from'; // Recalcula a partir do 'from' após a troca
 	}
 
@@ -86,13 +84,9 @@
 
 	function handleCurrencySelect(event: CustomEvent<string>) {
 		const newCode = event.detail;
-		$selectedCurrency = newCode;
+		const isAsset = ASSET_SYMBOLS.includes(newCode);
 		// Automatically invert if the selected item is an asset
-		if (ASSET_SYMBOLS.includes(newCode)) {
-			inverted = true;
-		} else {
-			inverted = false;
-		}
+		preferences.set({ currency: newCode, inverted: isAsset });
 	}
 
 	// Auto-refresh data every 90 seconds on the client
@@ -140,7 +134,7 @@
 				<legend>Alterar moeda:</legend>
 				<CustomSelect
 					categories={categorizedItems}
-					selectedCode={$selectedCurrency}
+					selectedCode={$preferences.currency}
 					on:select={handleCurrencySelect}
 				/>
 			</fieldset>
