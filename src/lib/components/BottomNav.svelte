@@ -1,8 +1,29 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { quintOut } from 'svelte/easing';
+	import { fly } from 'svelte/transition';
+
+	let showToast = false;
+	let toastMessage = '';
+	let timeoutId: ReturnType<typeof setTimeout>;
+
+	function showComingSoon(feature: string) {
+		toastMessage = `${feature} - Em breve!`;
+		showToast = true;
+
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => {
+			showToast = false;
+		}, 3000);
+	}
 </script>
 
+{#if showToast}
+	<div class="toast" transition:fly={{ y: 20, duration: 300, easing: quintOut }}>{toastMessage}</div>
+{/if}
+
 <nav>
+
 	<a href="/" class:active={$page.url.pathname === '/'}>
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +44,7 @@
 		>
 		<span>Cotação</span>
 	</a>
-	<a href="/alertas" class:active={$page.url.pathname.startsWith('/alertas')}>
+	<a on:click={() => showComingSoon('Alertas')} class="coming-soon">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -38,7 +59,7 @@
 		>
 		<span>Alertas</span>
 	</a>
-	<a href="/grafico" class:active={$page.url.pathname.startsWith('/grafico')}>
+	<a on:click={() => showComingSoon('Gráfico')} class="coming-soon">
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
 			width="24"
@@ -79,12 +100,41 @@
 		gap: 4px;
 		flex-grow: 1;
 		height: 100%;
-		transition: color 0.2s ease;
+				transition:
+			color 0.2s ease,
+			opacity 0.2s ease;
+		text-decoration: none;
+		cursor: pointer;
 	}
 	a:hover {
 		color: var(--color-bottomnav-active-text);
-			}
+				}
 	a.active {
 		color: var(--color-bottomnav-active-text);
+	}
+
+	a.coming-soon {
+		opacity: 0.6;
+	}
+
+	a.coming-soon:hover {
+		opacity: 1;
+		color: var(--color-bottomnav-text);
+	}
+
+	.toast {
+		position: fixed;
+		bottom: calc(var(--bottom-nav-height) + 1rem);
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: rgba(0, 0, 0, 0.75);
+		color: white;
+		padding: 0.75rem 1.25rem;
+		border-radius: 2rem;
+		z-index: 1000;
+		font-size: 0.9rem;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		backdrop-filter: blur(5px);
+		-webkit-backdrop-filter: blur(5px);
 	}
 </style>

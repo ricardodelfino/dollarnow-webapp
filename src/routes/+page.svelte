@@ -12,9 +12,16 @@
 	let toValue: number | undefined;
 	let lastEdited: 'from' | 'to' = 'from';
 
+	// Flag to prevent hydration mismatch on client.
+	let hydrated = false;
+
+	// Variáveis reativas com fallback para segurança no SSR
+	$: currency = $preferences?.currency || 'BRL';
+	$: inverted = $preferences?.inverted || false;
+
 	// Lógica reativa para determinar as moedas de origem e destino
-	$: fromCode = $preferences.inverted ? $preferences.currency : 'USD';
-	$: toCode = $preferences.inverted ? 'USD' : $preferences.currency;
+	$: fromCode = inverted ? currency : 'USD';
+	$: toCode = inverted ? 'USD' : currency;
 
 	// --- Simplified Rate Logic ---
 	// The API now provides a consistent format (units per 1 USD), so the logic is much simpler.
@@ -91,6 +98,10 @@
 
 	// Auto-refresh data every 90 seconds on the client
 	onMount(() => {
+		// This ensures we don't show server-rendered state (default 'BRL')
+		// before the client can load the user's actual preference from localStorage.
+		hydrated = true;
+
 		const interval = setInterval(() => {
 			console.log('Refreshing rates...');
 			invalidateAll();
@@ -104,7 +115,7 @@
 
 	{#if data.error}
 		<p class="error">{data.error}</p>
-	{:else if data.rates && data.metadata}
+	{:else if data.rates && data.metadata && hydrated}
 		<div class="converter-wrapper">
 			<CurrencyRow
 				amount={fromValue}
@@ -134,7 +145,7 @@
 				<legend>Alterar moeda:</legend>
 				<CustomSelect
 					categories={categorizedItems}
-					selectedCode={$preferences.currency}
+					selectedCode={currency}
 					on:select={handleCurrencySelect}
 				/>
 			</fieldset>
@@ -253,7 +264,7 @@
 		font-size: .95rem;
 		color: var(--color-text-secondary);
 		margin-left: .8rem;
-		}
+	}
 
 	.rate-display-box {
 		margin-top: 2rem;
