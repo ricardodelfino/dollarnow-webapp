@@ -133,7 +133,7 @@
 		margin-top: 4px;
 		padding: 0;
 		list-style: none;
-		max-height: 200px;
+		max-height: 500px;
 		overflow-y: auto;
 		z-index: 10;
 	}
