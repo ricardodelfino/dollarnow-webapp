@@ -94,7 +94,7 @@
 		padding: 1.1rem 0.8rem;
 		background-color: var(--color-background-secondary);
 		color: var(--color-text-primary);
-		border: 1px solid var(--color-border);
+		border: 0;
 		border-radius: 8px;
 		font-size: 1rem;
 		display: flex;

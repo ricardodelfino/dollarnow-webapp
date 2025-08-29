@@ -136,14 +136,14 @@
 				on:input={handleToInput}
 			/>
 
-			<div class="selector-container">
-				<label for="currency-select">Alterar moeda:</label>
+			<fieldset class="selector-container">
+				<legend>Alterar moeda:</legend>
 				<CustomSelect
 					categories={categorizedItems}
 					selectedCode={$selectedCurrency}
 					on:select={handleCurrencySelect}
 				/>
-			</div>
+			</fieldset>
 
 			<div class="rate-display-box">
 				<!-- This box now always reflects the conversion from the top row to the bottom row -->
@@ -189,9 +189,9 @@
 
 <style>
 	main {
-		padding: 2rem;
 		max-width: 600px;
-		margin: 2rem auto;
+		padding: 0 1rem;
+    	margin: 1% auto;
 	}
 	.swap-button svg {
 		width: 24px;
@@ -249,15 +249,17 @@
 		}
 
 	.selector-container {
-		margin-top: 2rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
+		margin-top: 1rem;
+		padding: 0;
+		background-color: var(--color-background-secondary);
+    	border: 1px solid var(--color-border);
+    	border-radius: 8px;
 	}
-	label {
-		font-size: 0.9rem;
+	.selector-container legend {
+		font-size: .95rem;
 		color: var(--color-text-secondary);
-	}
+		margin-left: .8rem;
+		}
 
 	.rate-display-box {
 		margin-top: 2rem;
