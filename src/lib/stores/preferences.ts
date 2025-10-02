@@ -1,6 +1,6 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
-import { currencyMetadata } from '$lib/constants';
+import { currencyMetadata, ASSET_SYMBOLS } from '$lib/constants';
 
 export type UserPreferences = {
 	currency: string;
@@ -61,7 +61,10 @@ function createPreferencesStore() {
 
 				// Use the detected currency only if it's one we support.
 				if (detectedCurrency && currencyMetadata[detectedCurrency]) {
-					initialValue.currency = detectedCurrency;
+					// Set the detected currency and ensure the view is not inverted by default,
+					// unless the detected currency is an asset (like BTC).
+					const isAsset = ASSET_SYMBOLS.includes(detectedCurrency);
+					initialValue = { currency: detectedCurrency, inverted: isAsset };
 				}
 			}
 		} catch (e) {
