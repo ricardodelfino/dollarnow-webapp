@@ -1,14 +1,17 @@
 # DollarNow Web App
 
-[!Deploy to Cloudflare Pages](https://pages.cloudflare.com/)
-[!Built with Svelte](https://svelte.dev)
-[!Powered by Vite](https://vitejs.dev)
+<p align="center">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img alt="Svelte" src="https://img.shields.io/badge/Svelte-FF3E00?style=for-the-badge&logo=svelte&logoColor=white" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" />
+  <img alt="Cloudflare" src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white" />
+</p>
 
 **DollarNow** is a sleek, fast, and user-friendly currency converter web application. It provides real-time exchange rates for a wide range of fiat currencies and assets, with a clean interface and a delightful user experience.
 
-The live version is available at: **dollarnow.pages.dev**
+The live version is available at: **[dollarnow.pages.dev](https://dollarnow.pages.dev)**
 
- <!-- TODO: Adicione um screenshot aqui -->
+ <!-- TODO: Add a screenshot of the app here -->
 
 ---
 
@@ -57,14 +60,6 @@ The live version is available at: **dollarnow.pages.dev**
     The application will be available at `http://localhost:5173`.
 
 ## Building for Production
-
-To create a production version of your app:
-
-```sh
-npm run build
-```
-
-## Building
 
 To create a production version of your app:
 

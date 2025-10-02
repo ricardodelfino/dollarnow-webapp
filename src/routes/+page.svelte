@@ -5,6 +5,7 @@
 	import CurrencyRow from '$lib/components/CurrencyRow.svelte';
 	import CustomSelect from '$lib/components/CustomSelect.svelte';
 	import { preferences } from '$lib/stores/preferences';
+	import { FIAT_SYMBOLS, ASSET_SYMBOLS } from '$lib/constants';
 
 	export let data: PageData;
 
@@ -43,10 +44,6 @@
 			}
 		}
 	}
-
-	// Lists for categorization
-	const FIAT_SYMBOLS = ['BRL', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'SEK', 'INR', 'PKR', 'IDR', 'MXN', 'BTC']; // BTC added here
-	const ASSET_SYMBOLS = ['BTC', 'XAU', 'XAG', 'XBR']; // BTC remains here
 
 	$: categorizedItems =
 		data.rates && data.metadata
