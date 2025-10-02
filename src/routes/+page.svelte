@@ -15,11 +15,11 @@
 	// Flag to prevent hydration mismatch on client.
 	let hydrated = false;
 
-	// Variáveis reativas com fallback para segurança no SSR
+	// Reactive variables with fallback for SSR safety
 	$: currency = $preferences?.currency || 'BRL';
 	$: inverted = $preferences?.inverted || false;
 
-	// Lógica reativa para determinar as moedas de origem e destino
+	// Reactive logic to determine source and target currencies
 	$: fromCode = inverted ? currency : 'USD';
 	$: toCode = inverted ? 'USD' : currency;
 
@@ -38,13 +38,13 @@
 			} else if (lastEdited === 'to' && toValue !== undefined) {
 				fromValue = toValue / effectiveRate;
 			} else if (fromValue !== undefined) {
-				// Fallback para recalcular se nenhum campo foi editado recentemente
+				// Fallback to recalculate if no field was recently edited
 				toValue = fromValue * effectiveRate;
 			}
 		}
 	}
 
-	// Listas para categorização
+	// Lists for categorization
 	const FIAT_SYMBOLS = ['BRL', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'SEK', 'INR', 'PKR', 'IDR', 'MXN', 'BTC']; // BTC added here
 	const ASSET_SYMBOLS = ['BTC', 'XAU', 'XAG', 'XBR']; // BTC remains here
 
@@ -52,7 +52,7 @@
 		data.rates && data.metadata
 			? [
 					{
-						name: 'Moedas',
+						name: 'Currencies',
 						items: FIAT_SYMBOLS.filter((code) => data.rates[code])
 							.map((code) => ({
 								code,
@@ -62,7 +62,7 @@
 							.sort((a, b) => a.code.localeCompare(b.code))
 					},
 					{
-						name: 'Ativos',
+						name: 'Assets',
 						items: ASSET_SYMBOLS.filter((code) => data.rates[code])
 							.map((code) => ({
 								code,
@@ -76,7 +76,7 @@
 
 	function handleSwap() {
 		preferences.update((p) => ({ ...p, inverted: !p.inverted }));
-		lastEdited = 'from'; // Recalcula a partir do 'from' após a troca
+		lastEdited = 'from'; // Recalculate from 'from' after swapping
 	}
 
 	function handleFromInput(event: CustomEvent<string>) {
@@ -126,7 +126,7 @@
 
 			<div class="swap-container">
 				<div class="line"></div>
-				<button on:click={handleSwap} class="swap-button" aria-label="Inverter moedas" title="Inverter Moedas">
+				<button on:click={handleSwap} class="swap-button" aria-label="Swap currencies" title="Swap Currencies">
 					<svg aria-hidden="true" focusable="false" role="none" width="20" height="20" fill="currentColor" viewBox="0 0 24 24">
 						<path fill-rule="evenodd" d="M13.707 15.293 16 17.586V3h2v14.586l2.293-2.293 1.414 1.414-3.993 3.993a1.01 1.01 0 0 1-1.428 0l-3.993-3.993zM8 6.414V21H6V6.414L3.707 8.707 2.293 7.293 6.286 3.3a1.01 1.01 0 0 1 1.428 0l3.993 3.993-1.414 1.414z" clip-rule="evenodd"></path>
 					</svg>
@@ -142,7 +142,7 @@
 			/>
 
 			<fieldset class="selector-container">
-				<legend>Alterar moeda:</legend>
+				<legend>Change currency:</legend>
 				<CustomSelect
 					categories={categorizedItems}
 					selectedCode={currency}
@@ -188,7 +188,7 @@
 			</div>
 		</div>
 	{:else}
-		<p>Carregando cotações...</p>
+		<p>Loading rates...</p>
 	{/if}
 </main>
 
@@ -261,7 +261,7 @@
     	border-radius: 8px;
 	}
 	.selector-container legend {
-		font-size: .95rem;
+		font-size: 0.95rem;
 		color: var(--color-text-secondary);
 		margin-left: .8rem;
 	}
@@ -281,7 +281,7 @@
 		color: var(--color-text-secondary);
 	}
 	.rate-value {
-		font-size: 3.6rem; /* 100% maior que o h1 de 1.8rem */
+		font-size: 3.6rem; /* 100% larger than the 1.8rem h1 */
 		font-weight: 700;
 		color: var(--color-rate-value);
 		line-height: 1.5;

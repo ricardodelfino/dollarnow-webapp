@@ -1,28 +1,67 @@
-# sv
+# DollarNow Web App
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+[!Deploy to Cloudflare Pages](https://pages.cloudflare.com/)
+[!Built with Svelte](https://svelte.dev)
+[!Powered by Vite](https://vitejs.dev)
 
-## Creating a project
+**DollarNow** is a sleek, fast, and user-friendly currency converter web application. It provides real-time exchange rates for a wide range of fiat currencies and assets, with a clean interface and a delightful user experience.
 
-If you're seeing this, you've probably already done this step. Congrats!
+The live version is available at: **dollarnow.pages.dev**
+
+ <!-- TODO: Adicione um screenshot aqui -->
+
+---
+
+## ✨ Features
+
+*   **Real-time Rates**: Fetches the latest currency exchange rates from a resilient API.
+*   **Wide Currency Support**: Includes major fiat currencies and assets like Gold, Silver, and Bitcoin.
+*   **Instant Conversion**: Two-way data binding for instant calculation as you type.
+*   **Intuitive UI**: A clean, mobile-first design with easy-to-use controls.
+*   **Theme Toggle**: Switch between a light and dark theme, with your preference saved locally.
+*   **Persistent Preferences**: Remembers your last selected currency and view (inverted or not).
+*   **Auto-Refresh**: Exchange rates are automatically updated every 90 seconds.
+
+## 🛠️ Tech Stack
+
+*   **Framework**: SvelteKit
+*   **Language**: TypeScript
+*   **Styling**: Plain CSS with CSS Variables for theming
+*   **API Backend**: Cloudflare Workers
+*   **Deployment**: Cloudflare Pages
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+*   Node.js (version 18.x or higher)
+*   npm (or pnpm, yarn)
+
+### Installation & Development
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/ricardodelfino/dollarnow-webapp.git
+    cd dollarnow-webapp
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3.  **Start the development server:**
+    ```bash
+    npm run dev
+    ```
+    The application will be available at `http://localhost:5173`.
+
+## Building for Production
+
+To create a production version of your app:
 
 ```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
-
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
-
-```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm run build
 ```
 
 ## Building

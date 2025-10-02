@@ -1,18 +1,18 @@
 <script>
-	// Importa o CSS global para que seja aplicado em todas as páginas
+	// Imports global CSS to be applied to all pages
 	import '../app.css';
-	// Importa o store para inicializar a lógica do tema
+	// Imports the theme store to initialize its logic
 	import theme from '$lib/stores/theme';
 	import BottomNav from '$lib/components/BottomNav.svelte';
 	import Header from '$lib/components/Header.svelte';
 
-	// Acessa o store para garantir que o script dele seja executado
+	// Accesses the store to ensure its script is executed
 	$: $theme;
 </script>
 
 <Header />
 <div class="app-content">
-	<!-- O <slot /> é onde o conteúdo da sua página (+page.svelte) será renderizado -->
+	<!-- The <slot /> is where your page content (+page.svelte) will be rendered -->
 	<slot />
 </div>
 <BottomNav />

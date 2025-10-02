@@ -1,7 +1,7 @@
 import type { PageLoad } from './$types';
 
-// Metadados das moedas, garantindo os nomes e caminhos corretos para as bandeiras.
-const currencyMetadata: Record<string, { name: string; flag: string }> = {
+// Currency metadata, ensuring correct names and paths for the flags.
+export const currencyMetadata: Record<string, { name: string; flag: string }> = {
 	USD: { name: 'United States Dollar', flag: '/flags/usd.svg' },
 	BRL: { name: 'Brazilian Real', flag: '/flags/brl.svg' },
 	EUR: { name: 'Euro', flag: '/flags/eur.svg' },
@@ -18,16 +18,22 @@ const currencyMetadata: Record<string, { name: string; flag: string }> = {
 	PKR: { name: 'Pakistani Rupee', flag: '/flags/pkr.svg' },
 	IDR: { name: 'Indonesian Rupiah', flag: '/flags/idr.svg' },
 	MXN: { name: 'Mexican Peso', flag: '/flags/mxn.svg' },
-	// Ativos
+	// Assets
 	BTC: { name: 'Bitcoin', flag: '/flags/btc.svg' },
 	XAU: { name: 'Gold (Ounce)', flag: '/flags/xau.svg' },
 	XAG: { name: 'Silver (Ounce)', flag: '/flags/xag.svg' },
 	XBR: { name: 'Brent Oil (Barrel)', flag: '/flags/xbr.svg' }
 };
 
+// Lists for categorization, now exported to be used on the page.
+// BTC is in both lists to appear in the "Currencies" category but behave as an "Asset".
+export const FIAT_SYMBOLS = ['BRL', 'EUR', 'JPY', 'GBP', 'AUD', 'CAD', 'CHF', 'CNY', 'HKD', 'NZD', 'SEK', 'INR', 'PKR', 'IDR', 'MXN', 'BTC'];
+export const ASSET_SYMBOLS = ['BTC', 'XAU', 'XAG', 'XBR'];
+
+
 export const load: PageLoad = async ({ fetch }) => {
-	// A URL agora aponta para o seu novo Worker resiliente.
-	const API_URL = 'https://dollarnow.solver-7a8.workers.dev/';
+	// The URL now points to your new resilient Worker.
+	const API_URL = 'https://dollarnow.21m.workers.dev/';
 
 	try {
 		const response = await fetch(API_URL);
@@ -42,17 +48,20 @@ export const load: PageLoad = async ({ fetch }) => {
 			throw new Error('API request was not successful.');
 		}
 
-		// Retornamos os dados para a página Svelte poder usá-los.
+		// Return the data for the Svelte page to use.
 		return {
 			rates: data.rates,
 			metadata: currencyMetadata,
-			// A API retorna um timestamp Unix em segundos.
-			// Verificamos se é um número válido e positivo antes de converter para milissegundos.
+			// The API returns a Unix timestamp in seconds.
+			// Check if it is a valid and positive number before converting to milliseconds.
 			updatedAt: typeof data.updated_at === 'number' && data.updated_at > 0 ? data.updated_at * 1000 : undefined
 		};
 	} catch (error) {
-		console.error('Error loading currency data:', error);
-		// Retorna um estado de erro que a página pode exibir.
+		// Log the error on the server (during SSR) and in the browser console (on the client).
+		if (error instanceof Error) {
+			console.error('Error loading currency data:', error.message);
+		}
+		// Return an error state that the page can display.
 		return { error: 'Could not load currency data. Please try again later.' };
 	}
 };
