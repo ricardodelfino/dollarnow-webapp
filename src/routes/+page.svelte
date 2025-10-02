@@ -235,9 +235,9 @@
 		justify-content: center;
 	}
 		:global([data-theme='light']) .swap-button {
-		background-color: #79b22b;
-		border-color: #79b22b;
-		color: #163300;
+		background-color: var(--color-bottomnav-active-text);
+		border-color: var(--color-bottomnav-active-text);
+		color: var(--color-text-primary);
 		/*border: 1px solid #9fe870;*/
 	}
 		:global([data-theme='dark']) .swap-button:hover 
